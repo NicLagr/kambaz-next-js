@@ -1,6 +1,4 @@
 "use client";
-
-import { Container } from "react-bootstrap";
 import "./index.css";
 import ForegroundColors from "./ForegroundColors";
 import BackgroundColors from "./BackgroundColors";
@@ -25,7 +23,7 @@ import BootstrapNavigation from "./BootstrapNavigation";
 
 export default function Lab2() {
   return (
-    <Container>
+    <div className="container">
       <div id="wd-lab2">
         <h2>Lab 2 - Cascading Style Sheets</h2>
         
@@ -98,6 +96,6 @@ export default function Lab2() {
         <BootstrapForms />
         <BootstrapNavigation />
       </div>
-    </Container>
+    </div>
   );
 }
