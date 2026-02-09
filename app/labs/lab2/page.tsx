@@ -1,4 +1,5 @@
 "use client";
+
 import "./index.css";
 import ForegroundColors from "./ForegroundColors";
 import BackgroundColors from "./BackgroundColors";
@@ -23,7 +24,7 @@ import BootstrapNavigation from "./BootstrapNavigation";
 
 export default function Lab2() {
   return (
-    <div className="container">
+    <div style={{ padding: "20px", minHeight: "100vh" }}>
       <div id="wd-lab2">
         <h2>Lab 2 - Cascading Style Sheets</h2>
         
