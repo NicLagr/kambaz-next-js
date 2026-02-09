@@ -1,26 +1,6 @@
 "use client";
 
 import "./index.css";
-import ForegroundColors from "./ForegroundColors";
-import BackgroundColors from "./BackgroundColors";
-import Borders from "./Borders";
-import Padding from "./Padding";
-import Margins from "./Margins";
-import Corners from "./Corners";
-import Dimensions from "./Dimensions";
-import Positions from "./Positions";
-import Zindex from "./Zindex";
-import Float from "./Float";
-import GridLayout from "./GridLayout";
-import Flex from "./Flex";
-import MediaQueriesDemo from "./MediaQueriesDemo";
-import ReactIconsSampler from "./ReactIconsSampler";
-import BootstrapGrids from "./BootstrapGrids";
-import ScreenSizeLabel from "./ScreenSizeLabel";
-import BootstrapTables from "./BootstrapTables";
-import BootstrapLists from "./BootstrapLists";
-import BootstrapForms from "./BootstrapForms";
-import BootstrapNavigation from "./BootstrapNavigation";
 
 export default function Lab2() {
   return (
@@ -76,26 +56,34 @@ export default function Lab2() {
           </div>
         </div>
 
-        <ForegroundColors />
-        <BackgroundColors />
-        <Borders />
-        <Padding />
-        <Margins />
-        <Corners />
-        <Dimensions />
-        <Positions />
-        <Zindex />
-        <Float />
-        <GridLayout />
-        <Flex />
-        <MediaQueriesDemo />
-        <ReactIconsSampler />
-        <BootstrapGrids />
-        <ScreenSizeLabel />
-        <BootstrapTables />
-        <BootstrapLists />
-        <BootstrapForms />
-        <BootstrapNavigation />
+        <div id="wd-css-colors">
+          <h2>Colors</h2>
+          <h3 className="wd-fg-color-blue">Foreground color</h3>
+          <p className="wd-fg-color-red">
+            The text in this paragraph is red but
+            <span className="wd-fg-color-green">this text is green</span>
+          </p>
+        </div>
+
+        <div id="wd-css-background-colors">
+          <h3 className="wd-bg-color-blue wd-fg-color-white">Background color</h3>
+          <p className="wd-bg-color-red wd-fg-color-black">
+            This background of this paragraph is red but
+            <span className="wd-bg-color-green wd-fg-color-white">
+              the background of this text is green and the foreground white
+            </span>
+          </p>
+        </div>
+
+        <div id="wd-css-borders">
+          <h2>Borders</h2>
+          <p className="wd-border-fat wd-border-red wd-border-solid">
+            Solid fat red border
+          </p>
+          <p className="wd-border-thin wd-border-blue wd-border-dashed">
+            Dashed thin blue border
+          </p>
+        </div>
       </div>
     </div>
   );
