@@ -242,7 +242,7 @@ export default function Lab1() {
       Please
       <a href="https://www.lipsum.com" id="wd-lipsum">click here</a>
       to get dummy text<br/>
-      <Link href="https://github.com/NicLagr/kambaz-next-js" id="wd-github">GitHub Repository</Link>
+      <Link href="https://github.com/NicLagr/kambaz-next-js/tree/a2" id="wd-github">GitHub Repository</Link>
     </div>
   );
 }
