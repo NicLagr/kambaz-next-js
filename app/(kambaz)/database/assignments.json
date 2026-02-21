@@ -1,0 +1,56 @@
+[
+  {
+    "_id": "A101",
+    "title": "A1 - ENV + HTML",
+    "course": "RS101",
+    "description": "Submit a link to the landing page of your Web application running on Vercel. Include your full name, links to labs, and link to Kambaz.",
+    "points": 100,
+    "dueDate": "2026-01-25",
+    "availableFrom": "2026-01-20"
+  },
+  {
+    "_id": "A102",
+    "title": "A2 - CSS + BOOTSTRAP",
+    "course": "RS101",
+    "description": "Style your app with CSS and Bootstrap. Responsive layout and React Bootstrap components.",
+    "points": 100,
+    "dueDate": "2026-02-08",
+    "availableFrom": "2026-02-01"
+  },
+  {
+    "_id": "A103",
+    "title": "A3 - JAVASCRIPT + REACT",
+    "course": "RS101",
+    "description": "Complete Lab 3 and data-driven Kambaz. Variables, functions, arrays, data-driven dashboard and course screens.",
+    "points": 198,
+    "dueDate": "2026-02-22",
+    "availableFrom": "2026-02-15"
+  },
+  {
+    "_id": "A201",
+    "title": "A1 - HTML",
+    "course": "RS102",
+    "description": "Build a simple HTML page with sections and links.",
+    "points": 100,
+    "dueDate": "2026-01-30",
+    "availableFrom": "2026-01-25"
+  },
+  {
+    "_id": "A202",
+    "title": "A2 - CSS",
+    "course": "RS102",
+    "description": "Add CSS styling and a stylesheet.",
+    "points": 100,
+    "dueDate": "2026-02-15",
+    "availableFrom": "2026-02-10"
+  },
+  {
+    "_id": "A301",
+    "title": "Problem Set 1",
+    "course": "RS103",
+    "description": "Big-O and sorting problems.",
+    "points": 50,
+    "dueDate": "2026-02-01",
+    "availableFrom": "2026-01-20"
+  }
+]

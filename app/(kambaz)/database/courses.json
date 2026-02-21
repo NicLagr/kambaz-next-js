@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "RS101",
+    "name": "CS4550 React",
+    "description": "Full stack dev with React and Node. Covers components, state, hooks, and REST APIs."
+  },
+  {
+    "_id": "RS102",
+    "name": "CS5610 Web Dev",
+    "description": "Web development fundamentals. HTML, CSS, JavaScript and single page apps."
+  },
+  {
+    "_id": "RS103",
+    "name": "CS5600 Algorithms",
+    "description": "Data structures and algorithms. Sorting, graphs, dynamic programming."
+  }
+]

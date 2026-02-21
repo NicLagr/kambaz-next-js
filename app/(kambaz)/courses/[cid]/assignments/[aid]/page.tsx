@@ -1,31 +1,60 @@
 "use client";
 
 import { Form, FormLabel, FormControl, FormSelect, FormCheck, Row, Col, Button } from "react-bootstrap";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import * as db from "../../../database";
+
+type Assignment = {
+  _id: string;
+  title: string;
+  course: string;
+  description?: string;
+  points?: number;
+  dueDate?: string;
+  availableFrom?: string;
+};
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = (db.assignments as Assignment[]).find(
+    (a) => a._id === aid
+  );
+
+  const assignToLink = `/courses/${cid}/assignments`;
+
   return (
     <div id="wd-assignments-editor">
       <Form>
         <FormLabel htmlFor="wd-name">Assignment Name</FormLabel>
-        <FormControl id="wd-name" defaultValue="A1 - ENV + HTML" className="mb-3" />
-        
+        <FormControl
+          id="wd-name"
+          defaultValue={assignment?.title ?? "Assignment"}
+          className="mb-3"
+          readOnly
+        />
+
         <FormLabel htmlFor="wd-description">Description</FormLabel>
-        <FormControl as="textarea" id="wd-description" rows={10} className="mb-3">
-          The assignment is available online Submit a link to the landing page of
-          your Web application running on Vercel. The landing page should
-          include the following: - Your full name - Links to all the lab
-          assignments - Link to the Kambaz application - Links to all relevant
-          source code repositories The landing page may include other optional
-          content such as an introduction to you personally and professionally,
-          your interests, etc.
-        </FormControl>
+        <FormControl
+          as="textarea"
+          id="wd-description"
+          rows={10}
+          className="mb-3"
+          defaultValue={assignment?.description ?? ""}
+          readOnly
+        />
 
         <Row className="mb-3">
           <Col sm={2}>
             <FormLabel column htmlFor="wd-points">Points</FormLabel>
           </Col>
           <Col sm={10}>
-            <FormControl id="wd-points" type="number" defaultValue={100} />
+            <FormControl
+              id="wd-points"
+              type="number"
+              defaultValue={assignment?.points ?? 100}
+              readOnly
+            />
           </Col>
         </Row>
 
@@ -95,7 +124,11 @@ export default function AssignmentEditor() {
             <FormLabel column htmlFor="wd-due-date">Due</FormLabel>
           </Col>
           <Col sm={10}>
-            <FormControl type="date" id="wd-due-date" defaultValue="2024-01-01" />
+            <FormControl
+              type="date"
+              id="wd-due-date"
+              defaultValue={assignment?.dueDate ?? "2024-01-01"}
+            />
           </Col>
         </Row>
 
@@ -104,7 +137,11 @@ export default function AssignmentEditor() {
             <FormLabel column htmlFor="wd-available-from">Available From</FormLabel>
           </Col>
           <Col sm={10}>
-            <FormControl type="date" id="wd-available-from" defaultValue="2024-01-01" />
+            <FormControl
+              type="date"
+              id="wd-available-from"
+              defaultValue={assignment?.availableFrom ?? "2024-01-01"}
+            />
           </Col>
         </Row>
 
@@ -118,11 +155,12 @@ export default function AssignmentEditor() {
         </Row>
 
         <div className="mt-3">
-          <Button variant="secondary" className="me-2">Cancel</Button>
+          <Link href={assignToLink}>
+            <Button variant="secondary" className="me-2">Cancel</Button>
+          </Link>
           <Button variant="danger">Save</Button>
         </div>
       </Form>
     </div>
   );
 }
-
