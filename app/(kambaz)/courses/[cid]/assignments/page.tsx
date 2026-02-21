@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button, FormControl, ListGroup, ListGroupItem } from "react-bootstrap";
 import { FaPlus, FaMagnifyingGlass } from "react-icons/fa6";
-import * as db from "../../database";
+import * as db from "../../../database";
 
 type Assignment = {
   _id: string;

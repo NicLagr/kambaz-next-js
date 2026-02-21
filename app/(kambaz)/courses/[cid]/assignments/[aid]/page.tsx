@@ -3,7 +3,7 @@
 import { Form, FormLabel, FormControl, FormSelect, FormCheck, Row, Col, Button } from "react-bootstrap";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import * as db from "../../../database";
+import * as db from "../../../../database";
 
 type Assignment = {
   _id: string;
