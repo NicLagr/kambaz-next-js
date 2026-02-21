@@ -3,8 +3,10 @@ import Link from "next/link";
 export default function Labs() {
   return (
     <div id="wd-labs">
-      <h1>Labs</h1>
-      <p>Nicolo Lagravinese</p>
+      <h1>Lab 1 - Landing Page</h1>
+      <p><strong>Name:</strong> Nicolo Lagravinese</p>
+      <p><strong>Section:</strong> CS4550.33211.202630</p>
+      <h2>Lab assignments</h2>
       <ul>
         <li>
           <Link href="/labs/lab1" id="wd-lab1-link">
@@ -22,8 +24,14 @@ export default function Labs() {
           </Link>
         </li>
       </ul>
-      <Link href="https://github.com/NicLagr/kambaz-next-js/tree/a2" id="wd-github">GitHub Repository</Link>
+      <p>
+        <Link href="/">Kambaz Application</Link>
+      </p>
+      <p>
+        <Link href="https://github.com/NicLagr/kambaz-next-js/tree/a3" id="wd-github">
+          GitHub Repository
+        </Link>
+      </p>
     </div>
   );
 }
-
