@@ -158,7 +158,9 @@ export default function AssignmentEditor() {
           <Link href={assignToLink}>
             <Button variant="secondary" className="me-2">Cancel</Button>
           </Link>
-          <Button variant="danger">Save</Button>
+          <Link href={assignToLink}>
+            <Button variant="danger">Save</Button>
+          </Link>
         </div>
       </Form>
     </div>
