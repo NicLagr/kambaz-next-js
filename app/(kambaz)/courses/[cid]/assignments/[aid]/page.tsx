@@ -3,7 +3,10 @@
 import { Form, FormLabel, FormControl, FormSelect, FormCheck, Row, Col, Button } from "react-bootstrap";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import * as db from "../../../../database";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../store";
+import { addAssignment, updateAssignment } from "../../../assignments/reducer";
+import { useState, useEffect } from "react";
 
 type Assignment = {
   _id: string;
@@ -16,10 +19,32 @@ type Assignment = {
 };
 
 export default function AssignmentEditor() {
+  const dispatch = useDispatch();
+  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
   const { cid, aid } = useParams();
-  const assignment = (db.assignments as Assignment[]).find(
-    (a) => a._id === aid
-  );
+  const assignment = (assignments as Assignment[]).find((a) => a._id === aid);
+  const isNew = aid === "new";
+  const isFaculty = currentUser?.role === "FACULTY";
+  const [edited, setEdited] = useState<any>({
+    _id: "new",
+    title: "New Assignment",
+    course: cid,
+    description: "",
+    points: 100,
+    dueDate: "2026-03-01",
+    availableFrom: "2026-02-22",
+    availableUntil: "2026-03-15",
+  });
+
+  useEffect(() => {
+    if (!isNew && assignment) {
+      setEdited({
+        ...assignment,
+        availableUntil: (assignment as any).availableUntil || "2026-12-31",
+      });
+    }
+  }, [assignment, isNew]);
 
   const assignToLink = `/courses/${cid}/assignments`;
 
@@ -29,9 +54,10 @@ export default function AssignmentEditor() {
         <FormLabel htmlFor="wd-name">Assignment Name</FormLabel>
         <FormControl
           id="wd-name"
-          defaultValue={assignment?.title ?? "Assignment"}
+          value={edited.title || ""}
           className="mb-3"
-          readOnly
+          readOnly={!isFaculty}
+          onChange={(e) => setEdited({ ...edited, title: e.target.value })}
         />
 
         <FormLabel htmlFor="wd-description">Description</FormLabel>
@@ -40,8 +66,9 @@ export default function AssignmentEditor() {
           id="wd-description"
           rows={10}
           className="mb-3"
-          defaultValue={assignment?.description ?? ""}
-          readOnly
+          value={edited.description || ""}
+          readOnly={!isFaculty}
+          onChange={(e) => setEdited({ ...edited, description: e.target.value })}
         />
 
         <Row className="mb-3">
@@ -52,8 +79,9 @@ export default function AssignmentEditor() {
             <FormControl
               id="wd-points"
               type="number"
-              defaultValue={assignment?.points ?? 100}
-              readOnly
+              value={edited.points || 0}
+              readOnly={!isFaculty}
+              onChange={(e) => setEdited({ ...edited, points: parseInt(e.target.value, 10) || 0 })}
             />
           </Col>
         </Row>
@@ -63,7 +91,7 @@ export default function AssignmentEditor() {
             <FormLabel column htmlFor="wd-assignment-group">Assignment Group</FormLabel>
           </Col>
           <Col sm={10}>
-            <FormSelect id="wd-assignment-group" defaultValue="ASSIGNMENTS">
+            <FormSelect id="wd-assignment-group" defaultValue="ASSIGNMENTS" disabled={!isFaculty}>
               <option value="ASSIGNMENTS">ASSIGNMENTS</option>
               <option value="QUIZZES">QUIZZES</option>
               <option value="EXAMS">EXAMS</option>
@@ -77,7 +105,7 @@ export default function AssignmentEditor() {
             <FormLabel column htmlFor="wd-display-grade-as">Display Grade As</FormLabel>
           </Col>
           <Col sm={10}>
-            <FormSelect id="wd-display-grade-as" defaultValue="Percentage">
+            <FormSelect id="wd-display-grade-as" defaultValue="Percentage" disabled={!isFaculty}>
               <option value="Percentage">Percentage</option>
               <option value="Points">Points</option>
               <option value="Letter">Letter</option>
@@ -90,7 +118,7 @@ export default function AssignmentEditor() {
             <FormLabel column htmlFor="wd-submission-type">Submission Type</FormLabel>
           </Col>
           <Col sm={10}>
-            <FormSelect id="wd-submission-type" defaultValue="Online">
+            <FormSelect id="wd-submission-type" defaultValue="Online" disabled={!isFaculty}>
               <option value="Online">Online</option>
               <option value="Offline">Offline</option>
             </FormSelect>
@@ -102,11 +130,11 @@ export default function AssignmentEditor() {
             <FormLabel column>Online Entry Options</FormLabel>
           </Col>
           <Col sm={10}>
-            <FormCheck type="checkbox" id="wd-text-entry" defaultChecked label="Text Entry" />
-            <FormCheck type="checkbox" id="wd-website-url" defaultChecked label="Website URL" />
-            <FormCheck type="checkbox" id="wd-media-recordings" label="Media Recordings" />
-            <FormCheck type="checkbox" id="wd-student-annotation" label="Student Annotation" />
-            <FormCheck type="checkbox" id="wd-file-uploads" defaultChecked label="File Uploads" />
+            <FormCheck type="checkbox" id="wd-text-entry" defaultChecked label="Text Entry" disabled={!isFaculty} />
+            <FormCheck type="checkbox" id="wd-website-url" defaultChecked label="Website URL" disabled={!isFaculty} />
+            <FormCheck type="checkbox" id="wd-media-recordings" label="Media Recordings" disabled={!isFaculty} />
+            <FormCheck type="checkbox" id="wd-student-annotation" label="Student Annotation" disabled={!isFaculty} />
+            <FormCheck type="checkbox" id="wd-file-uploads" defaultChecked label="File Uploads" disabled={!isFaculty} />
           </Col>
         </Row>
 
@@ -115,7 +143,7 @@ export default function AssignmentEditor() {
             <FormLabel column htmlFor="wd-assign-to">Assign To</FormLabel>
           </Col>
           <Col sm={10}>
-            <FormControl id="wd-assign-to" defaultValue="Everyone" />
+            <FormControl id="wd-assign-to" defaultValue="Everyone" readOnly={!isFaculty} />
           </Col>
         </Row>
 
@@ -127,7 +155,9 @@ export default function AssignmentEditor() {
             <FormControl
               type="date"
               id="wd-due-date"
-              defaultValue={assignment?.dueDate ?? "2024-01-01"}
+              value={edited.dueDate || ""}
+              readOnly={!isFaculty}
+              onChange={(e) => setEdited({ ...edited, dueDate: e.target.value })}
             />
           </Col>
         </Row>
@@ -140,7 +170,9 @@ export default function AssignmentEditor() {
             <FormControl
               type="date"
               id="wd-available-from"
-              defaultValue={assignment?.availableFrom ?? "2024-01-01"}
+              value={edited.availableFrom || ""}
+              readOnly={!isFaculty}
+              onChange={(e) => setEdited({ ...edited, availableFrom: e.target.value })}
             />
           </Col>
         </Row>
@@ -150,7 +182,13 @@ export default function AssignmentEditor() {
             <FormLabel column htmlFor="wd-until">Until</FormLabel>
           </Col>
           <Col sm={10}>
-            <FormControl type="date" id="wd-until" defaultValue="2024-12-31" />
+            <FormControl
+              type="date"
+              id="wd-until"
+              value={edited.availableUntil || ""}
+              readOnly={!isFaculty}
+              onChange={(e) => setEdited({ ...edited, availableUntil: e.target.value })}
+            />
           </Col>
         </Row>
 
@@ -158,9 +196,22 @@ export default function AssignmentEditor() {
           <Link href={assignToLink}>
             <Button variant="secondary" className="me-2">Cancel</Button>
           </Link>
-          <Link href={assignToLink}>
-            <Button variant="danger">Save</Button>
-          </Link>
+          {isFaculty && (
+            <Button
+              variant="danger"
+              onClick={() => {
+                const payload = { ...edited, course: cid };
+                if (isNew) {
+                  dispatch(addAssignment(payload));
+                } else {
+                  dispatch(updateAssignment(payload));
+                }
+                window.location.href = assignToLink;
+              }}
+            >
+              Save
+            </Button>
+          )}
         </div>
       </Form>
     </div>

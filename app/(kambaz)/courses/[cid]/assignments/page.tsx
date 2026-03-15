@@ -1,37 +1,34 @@
+"use client";
+
 import Link from "next/link";
 import { Button, FormControl, ListGroup, ListGroupItem } from "react-bootstrap";
 import { FaPlus, FaMagnifyingGlass } from "react-icons/fa6";
-import * as db from "../../../database";
+import { useParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store";
+import { deleteAssignment } from "../../assignments/reducer";
 
-type Assignment = {
-  _id: string;
-  title: string;
-  course: string;
-  description?: string;
-  points?: number;
-  dueDate?: string;
-  availableFrom?: string;
-};
-
-export default async function Assignments({
-  params,
-}: {
-  params: Promise<{ cid: string }>;
-}) {
-  const { cid } = await params;
-  const allAssignments = (db.assignments as Assignment[]).filter((a) => a.course === cid);
-
-  const assignList = allAssignments.filter((a) => a.title.startsWith("A") || a.title.startsWith("Problem"));
+export default function Assignments() {
+  const { cid } = useParams();
+  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
+  const dispatch = useDispatch();
+  const isFaculty = currentUser?.role === "FACULTY";
+  const assignList = assignments.filter((a: any) => a.course === cid);
 
   return (
     <div id="wd-assignments">
       <div className="d-flex justify-content-end mb-3">
-        <Button variant="danger" size="lg" className="me-2" id="wd-add-assignment">
-          <FaPlus className="me-2" /> Assignment
-        </Button>
-        <Button variant="secondary" size="lg" id="wd-add-assignment-group">
-          <FaPlus className="me-2" /> Group
-        </Button>
+        {isFaculty && (
+          <>
+            <Link href={`/courses/${cid}/assignments/new`} className="btn btn-danger btn-lg me-2" id="wd-add-assignment">
+              <FaPlus className="me-2" /> Assignment
+            </Link>
+            <Button variant="secondary" size="lg" id="wd-add-assignment-group">
+              <FaPlus className="me-2" /> Group
+            </Button>
+          </>
+        )}
       </div>
       <div className="mb-3">
         <div className="position-relative">
@@ -49,7 +46,7 @@ export default async function Assignments({
       <ListGroup className="rounded-0">
         {assignList.map((a) => (
           <ListGroupItem
-            key={a._id}
+            key={a._id as string}
             className="wd-assignment-list-item p-3 ps-1 border-start border-success border-5"
           >
             <Link
@@ -61,41 +58,20 @@ export default async function Assignments({
                 Not available until {a.availableFrom} | Due {a.dueDate} | {a.points} pts
               </div>
             </Link>
+            {isFaculty && (
+              <Button
+                className="btn btn-danger btn-sm float-end"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const confirmed = window.confirm("Are you sure you want to delete this assignment?");
+                  if (confirmed) dispatch(deleteAssignment(a._id));
+                }}
+              >
+                Delete
+              </Button>
+            )}
           </ListGroupItem>
         ))}
-      </ListGroup>
-      <h3 id="wd-quizzes-title" className="mt-4">
-        QUIZZES 10% of Total <Button variant="secondary" size="sm" className="float-end">+</Button>
-      </h3>
-      <ListGroup className="rounded-0">
-        <ListGroupItem className="wd-assignment-list-item p-3 ps-1 border-start border-success border-5">
-          <Link href={`/courses/${cid}/quizzes/q1`} className="wd-assignment-link text-decoration-none">
-            <div className="fw-bold">Q1 - HTML</div>
-            <div className="text-muted">Quiz | Due May 15 at 11:59pm | 50 pts</div>
-          </Link>
-        </ListGroupItem>
-      </ListGroup>
-      <h3 id="wd-exams-title" className="mt-4">
-        EXAMS 20% of Total <Button variant="secondary" size="sm" className="float-end">+</Button>
-      </h3>
-      <ListGroup className="rounded-0">
-        <ListGroupItem className="wd-assignment-list-item p-3 ps-1 border-start border-success border-5">
-          <Link href={`/courses/${cid}/exams/midterm`} className="wd-assignment-link text-decoration-none">
-            <div className="fw-bold">Midterm</div>
-            <div className="text-muted">Exam | Due June 1 at 11:59pm | 200 pts</div>
-          </Link>
-        </ListGroupItem>
-      </ListGroup>
-      <h3 id="wd-project-title" className="mt-4">
-        PROJECT 30% of Total <Button variant="secondary" size="sm" className="float-end">+</Button>
-      </h3>
-      <ListGroup className="rounded-0">
-        <ListGroupItem className="wd-assignment-list-item p-3 ps-1 border-start border-success border-5">
-          <Link href={`/courses/${cid}/projects/p1`} className="wd-assignment-link text-decoration-none">
-            <div className="fw-bold">Project - Kambaz</div>
-            <div className="text-muted">Project | Due June 10 at 11:59pm | 300 pts</div>
-          </Link>
-        </ListGroupItem>
       </ListGroup>
     </div>
   );

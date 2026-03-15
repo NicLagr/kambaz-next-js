@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 
 const links = [
   "Home",
@@ -14,7 +14,8 @@ const links = [
   "People",
 ];
 
-export default function CourseNavigation({ cid }: { cid: string }) {
+export default function CourseNavigation() {
+  const { cid } = useParams();
   const pathname = usePathname();
 
   const getPath = (label: string) => {

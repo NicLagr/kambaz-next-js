@@ -23,12 +23,17 @@ export default function Labs() {
             Lab 3: JavaScript Fundamentals
           </Link>
         </li>
+        <li>
+          <Link href="/labs/lab4" id="wd-lab4-link">
+            Lab 4: State Management
+          </Link>
+        </li>
       </ul>
       <p>
         <Link href="/">Kambaz Application</Link>
       </p>
       <p>
-        <Link href="https://github.com/NicLagr/kambaz-next-js/tree/a3" id="wd-github">
+        <Link href="https://github.com/NicLagr/kambaz-next-js/tree/a4" id="wd-github">
           GitHub Repository
         </Link>
       </p>
