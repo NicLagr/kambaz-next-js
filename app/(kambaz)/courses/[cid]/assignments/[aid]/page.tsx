@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../store";
 import { addAssignment, updateAssignment } from "../../../assignments/reducer";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 type Assignment = {
   _id: string;
@@ -26,6 +27,7 @@ export default function AssignmentEditor() {
   const assignment = (assignments as Assignment[]).find((a) => a._id === aid);
   const isNew = aid === "new";
   const isFaculty = currentUser?.role === "FACULTY";
+  const router = useRouter();
   const [edited, setEdited] = useState<any>({
     _id: "new",
     title: "New Assignment",
@@ -206,7 +208,7 @@ export default function AssignmentEditor() {
                 } else {
                   dispatch(updateAssignment(payload));
                 }
-                window.location.href = assignToLink;
+                router.push(assignToLink);
               }}
             >
               Save
