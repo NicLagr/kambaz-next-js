@@ -7,5 +7,10 @@
   { "_id": "E106", "user": "U102", "course": "RS102" },
   { "_id": "E107", "user": "U104", "course": "RS102" },
   { "_id": "E108", "user": "U101", "course": "RS103" },
-  { "_id": "E109", "user": "U106", "course": "RS103" }
+  { "_id": "E109", "user": "U106", "course": "RS103" },
+  { "_id": "E110", "user": "U300", "course": "RS101" },
+  { "_id": "E111", "user": "U300", "course": "RS102" },
+  { "_id": "E112", "user": "U200", "course": "RS101" },
+  { "_id": "E113", "user": "U200", "course": "RS102" },
+  { "_id": "E114", "user": "U200", "course": "RS103" }
 ]

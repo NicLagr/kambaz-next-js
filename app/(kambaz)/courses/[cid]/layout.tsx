@@ -14,22 +14,13 @@ export default function CoursesLayout({ children }: { children: ReactNode }) {
   const [showNavigation, setShowNavigation] = useState(true);
   const { courses } = useSelector((state: RootState) => state.coursesReducer);
   const { currentUser } = useSelector((state: RootState) => state.accountReducer);
-  const { enrollments } = useSelector((state: RootState) => state.enrollmentsReducer);
   const course = courses.find((c: any) => c._id === cid);
 
   useEffect(() => {
     if (!currentUser) {
       router.replace("/account/signin");
-      return;
     }
-    if (currentUser.role === "FACULTY") return;
-    const enrolled = enrollments.some(
-      (enrollment: any) => enrollment.user === currentUser._id && enrollment.course === cid
-    );
-    if (!enrolled) {
-      router.replace("/dashboard");
-    }
-  }, [cid, currentUser, enrollments, router]);
+  }, [cid, currentUser, router]);
 
   return (
     <div id="wd-courses">

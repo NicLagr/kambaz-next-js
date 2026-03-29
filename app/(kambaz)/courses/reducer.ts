@@ -1,30 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { courses } from "../database";
-import { v4 as uuidv4 } from "uuid";
 
 const initialState = {
-  courses: courses as any[],
+  courses: [] as any[],
 };
 
 const coursesSlice = createSlice({
   name: "courses",
   initialState,
   reducers: {
+    setCourses: (state, { payload }) => {
+      state.courses = payload;
+    },
     addNewCourse: (state, { payload: course }) => {
-      const newCourse = { ...course, _id: uuidv4() };
-      state.courses = [...state.courses, newCourse] as any;
+      state.courses = [...state.courses, course] as any;
     },
     deleteCourse: (state, { payload: courseId }) => {
-      state.courses = state.courses.filter((course: any) => course._id !== courseId);
+      state.courses = state.courses.filter((c: any) => c._id !== courseId);
     },
     updateCourse: (state, { payload: course }) => {
-      state.courses = state.courses.map((c: any) => (c._id === course._id ? course : c)) as any;
-    },
-    setCourses: (state, { payload: nextCourses }) => {
-      state.courses = nextCourses;
+      state.courses = state.courses.map((c: any) =>
+        c._id === course._id ? course : c
+      ) as any;
     },
   },
 });
 
-export const { addNewCourse, deleteCourse, updateCourse, setCourses } = coursesSlice.actions;
+export const { setCourses, addNewCourse, deleteCourse, updateCourse } = coursesSlice.actions;
 export default coursesSlice.reducer;

@@ -33,13 +33,23 @@ export default function TOC() {
         </NavLink>
       </NavItem>
       <NavItem>
+        <NavLink as={Link} href="/labs/lab5" id="wd-lab5-link" active={pathname.endsWith("lab5")}>
+          Lab 5
+        </NavLink>
+      </NavItem>
+      <NavItem>
         <NavLink as={Link} href="/" id="wd-kambaz-link">
           Kambaz
         </NavLink>
       </NavItem>
       <NavItem>
-        <NavLink href="https://github.com/NicLagr/kambaz-next-js/tree/a4" id="wd-github">
-          My GitHub
+        <NavLink href="https://github.com/NicLagr/kambaz-next-js/tree/a5" id="wd-github">
+          React GitHub
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink href="https://github.com/NicLagr/kambaz-node-server-app" id="wd-server-github">
+          Server GitHub
         </NavLink>
       </NavItem>
     </Nav>

@@ -96,5 +96,19 @@
     "role": "FACULTY",
     "lastActivity": "2026-02-21",
     "totalActivity": "30:00:00"
+  },
+  {
+    "_id": "U300",
+    "username": "iron_man",
+    "password": "stark123",
+    "firstName": "Tony",
+    "lastName": "Stark",
+    "email": "tony@avengers.io",
+    "dob": "1970-05-29",
+    "loginId": "tstark",
+    "section": "FAC",
+    "role": "FACULTY",
+    "lastActivity": "2026-03-01",
+    "totalActivity": "25:00:00"
   }
 ]

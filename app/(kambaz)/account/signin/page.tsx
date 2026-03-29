@@ -3,31 +3,26 @@
 import Link from "next/link";
 import { FormControl, Button } from "react-bootstrap";
 import { setCurrentUser } from "../reducer";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { RootState } from "../../store";
+import * as client from "../client";
 
 export default function Signin() {
   const [credentials, setCredentials] = useState<any>({});
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();
-  const { users } = useSelector((state: RootState) => state.accountReducer);
 
-  const signin = () => {
-    const user = (users as any[]).find(
-      (u: any) =>
-        u.username === credentials.username &&
-        u.password === credentials.password
-    );
-    if (!user) {
-      setError("Invalid username or password");
-      return;
+  const signin = async () => {
+    try {
+      const user = await client.signin(credentials);
+      if (!user) return;
+      dispatch(setCurrentUser(user));
+      router.push("/dashboard");
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Invalid username or password");
     }
-    setError("");
-    dispatch(setCurrentUser(user));
-    router.push("/dashboard");
   };
 
   return (
@@ -54,4 +49,3 @@ export default function Signin() {
     </div>
   );
 }
-
