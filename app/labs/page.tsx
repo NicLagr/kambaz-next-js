@@ -39,6 +39,11 @@ export default function Labs() {
             Node Server GitHub Repository
           </Link>
         </li>
+        <li>
+          <Link href="https://kambaz-node-server-app-8njo.onrender.com" id="wd-server-render">
+            Node Server (Render)
+          </Link>
+        </li>
       </ul>
     </div>
   );
