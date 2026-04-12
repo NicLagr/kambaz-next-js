@@ -8,8 +8,13 @@ export const signin = async (credentials: any) => {
   return response.data;
 };
 export const profile = async () => {
-  const response = await axiosWithCredentials.post(`${USERS_API}/profile`);
-  return response.data;
+  try {
+    const response = await axiosWithCredentials.post(`${USERS_API}/profile`);
+    return response.data;
+  } catch (err: any) {
+    if (err.response?.status === 401) return null;
+    throw err;
+  }
 };
 export const signup = async (user: any) => {
   const response = await axiosWithCredentials.post(`${USERS_API}/signup`, user);
@@ -22,4 +27,30 @@ export const signout = async () => {
 export const updateUser = async (user: any) => {
   const response = await axiosWithCredentials.put(`${USERS_API}/${user._id}`, user);
   return response.data;
+};
+
+// admin user management
+export const findAllUsers = async () => {
+  const { data } = await axios.get(USERS_API);
+  return data;
+};
+export const findUsersByRole = async (role: string) => {
+  const { data } = await axios.get(`${USERS_API}?role=${role}`);
+  return data;
+};
+export const findUsersByPartialName = async (name: string) => {
+  const { data } = await axios.get(`${USERS_API}?name=${name}`);
+  return data;
+};
+export const findUserById = async (id: string) => {
+  const { data } = await axios.get(`${USERS_API}/${id}`);
+  return data;
+};
+export const createUser = async (user: any) => {
+  const { data } = await axios.post(USERS_API, user);
+  return data;
+};
+export const deleteUser = async (userId: string) => {
+  const { data } = await axios.delete(`${USERS_API}/${userId}`);
+  return data;
 };

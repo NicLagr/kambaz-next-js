@@ -9,12 +9,8 @@ export default function Session({ children }: { children: any }) {
   const dispatch = useDispatch();
 
   const fetchProfile = async () => {
-    try {
-      const currentUser = await client.profile();
-      dispatch(setCurrentUser(currentUser));
-    } catch (err: any) {
-      console.error(err);
-    }
+    const currentUser = await client.profile();
+    if (currentUser) dispatch(setCurrentUser(currentUser));
     setPending(false);
   };
   useEffect(() => {

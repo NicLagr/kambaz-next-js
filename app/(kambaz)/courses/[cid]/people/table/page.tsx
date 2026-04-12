@@ -1,62 +1,47 @@
 "use client";
 
-import { Table } from "react-bootstrap";
-import { FaUserCircle } from "react-icons/fa";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import * as db from "../../../../database";
+import * as client from "../../../client";
+import PeopleTable from "../PeopleTable";
+import PeopleDetails from "../PeopleDetails";
 
-type User = {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  loginId: string;
-  section: string;
-  role: string;
-  lastActivity: string;
-  totalActivity: string;
-};
-
-type Enrollment = { user: string; course: string };
-
-export default function PeopleTable() {
+export default function PeoplePage() {
   const { cid } = useParams();
-  const users = db.users as User[];
-  const enrollments = db.enrollments as Enrollment[];
+  const [users, setUsers] = useState<any[]>([]);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
 
-  const enrolled = users.filter((u) =>
-    enrollments.some((e) => e.user === u._id && e.course === cid)
-  );
+  const fetchUsers = async () => {
+    const data = await client.findUsersForCourse(cid as string);
+    setUsers(data);
+  };
+
+  useEffect(() => {
+    fetchUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cid]);
+
+  const handleDelete = (userId: string) => {
+    setUsers(users.filter((u) => u._id !== userId));
+    setSelectedUser(null);
+  };
+
+  const handleUpdate = (updated: any) => {
+    setUsers(users.map((u) => (u._id === updated._id ? updated : u)));
+    setSelectedUser(updated);
+  };
 
   return (
-    <div id="wd-people-table">
-      <Table striped>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Login ID</th>
-            <th>Section</th>
-            <th>Role</th>
-            <th>Last Activity</th>
-            <th>Total Activity</th>
-          </tr>
-        </thead>
-        <tbody>
-          {enrolled.map((user) => (
-            <tr key={user._id}>
-              <td className="wd-full-name text-nowrap">
-                <FaUserCircle className="me-2 fs-1 text-secondary" />
-                <span className="wd-first-name">{user.firstName}</span>{" "}
-                <span className="wd-last-name">{user.lastName}</span>
-              </td>
-              <td className="wd-login-id">{user.loginId}</td>
-              <td className="wd-section">{user.section}</td>
-              <td className="wd-role">{user.role}</td>
-              <td className="wd-last-activity">{user.lastActivity}</td>
-              <td className="wd-total-activity">{user.totalActivity}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+    <div>
+      <PeopleTable users={users} onSelectUser={setSelectedUser} />
+      {selectedUser && (
+        <PeopleDetails
+          user={selectedUser}
+          onClose={() => setSelectedUser(null)}
+          onDelete={handleDelete}
+          onUpdate={handleUpdate}
+        />
+      )}
     </div>
   );
 }

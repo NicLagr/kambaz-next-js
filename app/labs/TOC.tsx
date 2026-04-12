@@ -43,12 +43,12 @@ export default function TOC() {
         </NavLink>
       </NavItem>
       <NavItem>
-        <NavLink href="https://github.com/NicLagr/kambaz-next-js/tree/a5" id="wd-github">
+        <NavLink href="https://github.com/NicLagr/kambaz-next-js/tree/a6" id="wd-github">
           React GitHub
         </NavLink>
       </NavItem>
       <NavItem>
-        <NavLink href="https://github.com/NicLagr/kambaz-node-server-app" id="wd-server-github">
+        <NavLink href="https://github.com/NicLagr/kambaz-node-server-app/tree/a6" id="wd-server-github">
           Server GitHub
         </NavLink>
       </NavItem>

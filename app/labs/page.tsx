@@ -30,12 +30,12 @@ export default function Labs() {
       <h2>Source Repositories</h2>
       <ul>
         <li>
-          <Link href="https://github.com/NicLagr/kambaz-next-js/tree/a5" id="wd-github">
+          <Link href="https://github.com/NicLagr/kambaz-next-js/tree/a6" id="wd-github">
             React GitHub Repository
           </Link>
         </li>
         <li>
-          <Link href="https://github.com/NicLagr/kambaz-node-server-app" id="wd-server-github">
+          <Link href="https://github.com/NicLagr/kambaz-node-server-app/tree/a6" id="wd-server-github">
             Node Server GitHub Repository
           </Link>
         </li>
