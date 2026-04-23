@@ -439,7 +439,7 @@ function QuestionEditor({ question, index, onSave, onCancel, onRemove }: {
           onChange={(e) => setQField("title", e.target.value)}
         />
         <select className="form-select" style={{ maxWidth: 200 }} value={q.type} onChange={(e) => changeType(e.target.value as Question["type"])}>
-          <option value="MULTIPLE_CHOICE">Multiple Choice</option>
+          <option value="MULTIPLE_CHOICE">Multi Select</option>
           <option value="TRUE_FALSE">True/False</option>
           <option value="FILL_IN_BLANK">Fill in the Blank</option>
         </select>
