@@ -19,8 +19,12 @@ export default function Modules() {
   const dispatch = useDispatch();
 
   const fetchModules = async () => {
-    const modules = await client.findModulesForCourse(cid as string);
-    dispatch(setModules(modules));
+    try {
+      const modules = await client.findModulesForCourse(cid as string);
+      dispatch(setModules((modules ?? []).filter(Boolean)));
+    } catch (error) {
+      console.error(error);
+    }
   };
   useEffect(() => {
     fetchModules();
@@ -52,7 +56,7 @@ export default function Modules() {
       />
       <br /><br /><br />
       <ListGroup className="rounded-0" id="wd-modules">
-        {modules.map((module: any) => (
+        {modules.filter(Boolean).map((module: any) => (
           <ListGroupItem key={module._id} className="wd-module p-0 mb-5 fs-5 border-gray">
             <div className="wd-title p-3 ps-2 bg-secondary">
               <BsGripVertical className="me-2 fs-3" />

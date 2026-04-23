@@ -31,8 +31,9 @@ export default function Dashboard() {
   const fetchCourses = async () => {
     try {
       const myCourses = await client.findMyCourses();
-      dispatch(setCourses(myCourses));
-      setEnrolledIds(new Set(myCourses.map((c: any) => c._id)));
+      const safeCourses = (myCourses ?? []).filter(Boolean);
+      dispatch(setCourses(safeCourses));
+      setEnrolledIds(new Set(safeCourses.map((c: any) => c._id)));
     } catch (error) {
       console.error(error);
     }
@@ -40,7 +41,7 @@ export default function Dashboard() {
   const fetchAllCourses = async () => {
     try {
       const all = await client.fetchAllCourses();
-      setAllCourses(all);
+      setAllCourses((all ?? []).filter(Boolean));
     } catch (error) {
       console.error(error);
     }
@@ -114,7 +115,7 @@ export default function Dashboard() {
       <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
-          {visibleCourses.map((c: any) => (
+          {visibleCourses.filter(Boolean).map((c: any) => (
             <Col key={c._id} className="wd-dashboard-course" style={{ width: "300px" }}>
               <Card>
                 <Link href={`/courses/${c._id}/home`}

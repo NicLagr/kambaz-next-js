@@ -18,8 +18,12 @@ export default function Assignments() {
   const isFaculty = currentUser?.role === "FACULTY";
 
   const fetchAssignments = async () => {
-    const data = await client.findAssignmentsForCourse(cid as string);
-    dispatch(setAssignments(data));
+    try {
+      const data = await client.findAssignmentsForCourse(cid as string);
+      dispatch(setAssignments((data ?? []).filter(Boolean)));
+    } catch (error) {
+      console.error(error);
+    }
   };
   useEffect(() => {
     fetchAssignments();
@@ -57,7 +61,7 @@ export default function Assignments() {
         ASSIGNMENTS 40% of Total <Button variant="secondary" size="sm" className="float-end">+</Button>
       </h3>
       <ListGroup className="rounded-0">
-        {assignments.map((a: any) => (
+        {assignments.filter(Boolean).map((a: any) => (
           <ListGroupItem key={a._id} className="wd-assignment-list-item p-3 ps-1 border-start border-success border-5">
             <Link href={`/courses/${cid}/assignments/${a._id}`}
               className="wd-assignment-link text-decoration-none">
